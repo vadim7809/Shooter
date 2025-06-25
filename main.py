@@ -2,6 +2,8 @@ import random
 
 import pygame
 
+from file_helper import *
+
 class Player:
     def __init__(self, speed,
                  x, y,
@@ -79,7 +81,10 @@ background_img = pygame.image.load("photo/galaxy (1).jpg")
 background_img = pygame.transform.scale(background_img, [700, 500])
 game = True
 
-hero = Player(7, 500, 400, 50, 50, "photo/rocket (1).png")
+data = read_file()
+#save_file(data)
+
+hero = Player(7, 500, 400, 50, 50, data["skin"])
 
 enemies = []
 y =  50
@@ -103,6 +108,10 @@ while game:
                 hero.bullets.remove(bullet)
                 enemy.hitbox.y = -100
                 enemy.hitbox.x = random.randint(0, 600)
+
+                data= read_file()
+                data["money"] += 1
+                save_file(data)
                 break
 
 

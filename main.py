@@ -46,6 +46,8 @@ class Player:
             self.bullets.append(
                 Bullet(10, self.hitbox.x + 10, self.hitbox.y, 10, 20, "bullet (1).png")
             )
+            shoot_sound = pygame.mixer.Sound("sounds/fire (1).ogg")
+
 
 
         for bullet in self.bullets:
@@ -97,11 +99,6 @@ def start_game():
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(0.1)
 
-    shoot_sound = pygame.mixer.Sound("sounds/fire (1).ogg")
-    if keys[pygame.K_SPACE]:
-        shoot_sound.play()
-
-
 
     running = True
     while running:
@@ -129,6 +126,9 @@ def start_game():
                 enemy.hitbox.x = random.randint(0, 600)
                 missed_enemy += 1
 
+        if killed_enemy >= 500:
+            running = False
+
 
         window.fill([123, 123, 123])
         window.blit(background_img, [0, 0])
@@ -139,7 +139,7 @@ def start_game():
         money_text = font.render("Монет: " + str(data["money"]), True, (255, 255, 255))
         missed_text = font.render("Втікло: " + str(missed_enemy), True, (255, 255, 255))
         killed_text = font.render("Знищено: " + str(killed_enemy), True, (255, 255, 255))
-
+        
         window.blit(money_text, (10, 10))
         window.blit(missed_text, (10, 40))
         window.blit(killed_text, (10, 70))
